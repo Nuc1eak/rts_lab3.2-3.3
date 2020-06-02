@@ -2,6 +2,8 @@ import random
 from itertools import combinations
 from datetime import datetime
 
+numb_of_mutations = 0
+
 
 def diophantine(*coefficients: iter, y: int, population_size: int = 5):
     if len(coefficients) != 4:
@@ -70,6 +72,7 @@ def crossover(population, population_size, scores):
 
 
 def mutated(population, goal, mutation_index):
+    global numb_of_mutations
     mutated_population = []
     for roots in population:
         mutated_roots = roots
@@ -79,6 +82,7 @@ def mutated(population, goal, mutation_index):
             mutated_roots[index] = (mutated_roots[index]
                                     + random.randint(-goal // 4, +goal // 4))
         mutated_population.append(mutated_roots)
+    numb_of_mutations += 1
 
     return mutated_population
 
@@ -110,4 +114,5 @@ if __name__ == '__main__':
     show_as_answer(final_result, your_coefficients, res)
     print(f"Algorithm execution time: {finish - start}ms."
           f"\nCrossovers executed: {crossovers_num}"
-          f"\nMutations executed: {mutate_num}")
+          f"\nMutations executed: {mutate_num}"
+          f"\nКількість мутацій: {numb_of_mutations}")
